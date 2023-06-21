@@ -4,7 +4,7 @@ from pathlib import Path
 import pandas as pd
 from joblib import dump
 from sklearn import preprocessing
-from sklearn.ensemble import HistGradientBoostingRegressor
+from sklearn.ensemble import HistGradientBoostingRegressor, RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 
@@ -35,7 +35,8 @@ def train():
     scaler = preprocessing.StandardScaler().fit(X_train)
     X_train = scaler.transform(X_train)
     X_test = scaler.transform(X_test)
-    model = HistGradientBoostingRegressor(max_iter=50).fit(X_train, y_train)
+    # model = HistGradientBoostingRegressor(max_iter=50).fit(X_train, y_train)
+    model = RandomForestRegressor(max_depth=30).fit(X_train, y_train)
 
     y_pred = model.predict(X_test)
     error = mean_squared_error(y_test, y_pred)
